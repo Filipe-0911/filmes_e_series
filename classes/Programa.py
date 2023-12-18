@@ -12,6 +12,9 @@ class Programa(Crud):
     
     def dar_likes(self):
         self._likes += 1
+        modificacoes = {'likes': self._likes}
+        id = self._get_id()
+        return Crud().atualizar_registro(id, modificacoes, self.produto, 'id')
 
     @property
     def nome(self):
@@ -26,3 +29,6 @@ class Programa(Crud):
     
     def __str__(self):
        return f"Nome: {self._nome} - Ano: {self.ano} - Likes: {self._likes}"
+    
+    def _get_id(self):
+        return Crud().consultar_dados(self.produto, self.nome)[0][0]

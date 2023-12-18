@@ -1,6 +1,7 @@
 from classes.Filme import Filme
 from classes.Serie import Serie
 from classes.PlayList import PlayList
+from classes.Crud import Crud
 
 #ESTUDAR MIXINS
 
@@ -20,6 +21,8 @@ atlanta.dar_likes()
 
 tmep.dar_likes()
 tmep.dar_likes()
+tmep.dar_likes()
+tmep.dar_likes()
 
 demolidor.dar_likes()
 demolidor.dar_likes()
@@ -28,6 +31,5 @@ demolidor.dar_likes()
 filmes_e_series = [vindagores, atlanta, demolidor, tmep]
 fim_de_semana = PlayList('Fim de semana', filmes_e_series)
 
-# print(f"Tamanho do playlist: {len(fim_de_semana)}")
-# for programa in fim_de_semana:
-#     print(programa)
+for programa in fim_de_semana:
+    print(programa)

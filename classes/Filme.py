@@ -3,7 +3,8 @@ from classes.Crud import Crud
 
 class Filme(Programa, Crud):
 
-
+    produto = 'Filme'
+    
     def __init__(self, nome, ano, duracao):
         super().__init__(nome, ano)
         self.duracao = duracao
@@ -13,14 +14,14 @@ class Filme(Programa, Crud):
     def __str__(self):
         return f"{super().__str__()} - {self.duracao} min"
     
-    def inserir(self, item):
+    def inserir(self, item): 
         banco = Crud()
         banco.criar_tabela()
         filtrar_por = self.nome
-        produto_duplicado = banco.consultar_dados('Filme', filtrar_por)
+        produto_duplicado = banco.consultar_dados(self.produto, filtrar_por)
 
         if produto_duplicado:
-            print("Produto já inserido")
+            # print("Produto já inserido")
             return "Produto já inserido"
         else: 
             banco.inserir_filme(item)

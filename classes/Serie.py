@@ -3,7 +3,7 @@ from classes.Crud import Crud
 
 class Serie(Programa, Crud):
 
-    produto = 'serie'
+    produto = 'Serie'
 
     def __init__(self, nome, ano, temporadas):
         super().__init__(nome, ano)
@@ -18,7 +18,7 @@ class Serie(Programa, Crud):
         banco = Crud()
         banco.criar_tabela()
         filtrar_por = self.nome
-        produto_duplicado = banco.consultar_dados('Serie', filtrar_por)
+        produto_duplicado = banco.consultar_dados(self.produto, filtrar_por)
 
         if produto_duplicado:
             print("Produto já inserido")

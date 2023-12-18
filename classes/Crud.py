@@ -59,19 +59,20 @@ class Crud:
                             VALUES(?,?,?,?)
                             """, (serie['_nome'], serie['ano'], serie['temporadas'], serie['_likes']))
         self.conn.commit()
-    
-    def consultar_dados(self, produto, id=None):
-        if id:
-            self.cursor.execute(f'SELECT * FROM {produto} WHERE nome=?', (id,))
+            
+    def consultar_dados(self, produto, nome=None):
+        if nome:
+            self.cursor.execute(f'SELECT * FROM {produto} WHERE nome=?', (nome,))
         else:
-            self.cursos.execute(f'SELECT * FROM {produto}')
+            self.cursor.execute(f'SELECT * FROM {produto}')
+        result = self.cursor.fetchall()
 
-        return self.cursor.fetchall()
+        return result
     
     def atualizar_registro(self, id, modificacoes, banco, parametro_busca):
         if not modificacoes:
             return "Não foi informada nenhuma modificação"
-        
+               
         campos_atualizar = ', '.join(f"{campo} =?" for campo in modificacoes.keys())
         valores_atualizar = tuple(modificacoes.values())
 
@@ -81,6 +82,8 @@ class Crud:
             WHERE {parametro_busca}=?
         """, valores_atualizar + (id, ))
         self.conn.commit()
+        
+        return f"Você deu like em {id}"
     
     def excluir_registro(self, id, banco):
         self.cursor.execute(f"DELETE FROM {banco} WHERE id=?", (id,))
