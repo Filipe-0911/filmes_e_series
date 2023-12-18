@@ -1,8 +1,10 @@
-# Ignorar arquivos de ambiente
+# ignorar arquivos de ambiente
 .env
 
-# Ignorar diretório de cache do Python
+# ignorar diretório de cache do Python
 __pycache__/
 
-# Ignorar a pasta database
+# ignorar a pasta database
 database/
+
+*.db
