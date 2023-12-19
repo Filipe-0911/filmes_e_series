@@ -1,10 +1,12 @@
 from classes.Crud import Crud
+from classes.CategoriaMixin import CategoriaMixin
 
-class Programa(Crud):
-    def __init__(self, nome, ano):
+class Programa(CategoriaMixin, Crud):
+    def __init__(self, nome, ano, categoria):
         self._nome = nome.title()
         self.ano = ano
         self._likes = 0
+        super().__init__(categoria)
     
     @property
     def likes(self):

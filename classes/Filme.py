@@ -5,8 +5,8 @@ class Filme(Programa, Crud):
 
     produto = 'Filme'
     
-    def __init__(self, nome, ano, duracao):
-        super().__init__(nome, ano)
+    def __init__(self, nome, ano, duracao, categoria=None):
+        super().__init__(nome, ano, categoria)
         self.duracao = duracao
 
         self.inserir(self.detalhar())

@@ -10,7 +10,7 @@ class Crud:
 
         self.nome_banco = caminho_banco
         self.conectar_banco()
-
+        
     def conectar_banco(self):
         try:
             if not os.path.exists(os.path.dirname(self.nome_banco)):
@@ -32,7 +32,8 @@ class Crud:
                             nome TEXT,
                             ano TEXT,
                             temporadas TEXT,
-                            likes INTEGER
+                            likes INTEGER,
+                            categoria TEXT
             )""")
         
         self.cursor.execute(f"""
@@ -41,23 +42,24 @@ class Crud:
                             nome TEXT,
                             ano TEXT,
                             duracao INTEGER,
-                            likes INTEGER
+                            likes INTEGER,
+                            categoria TEXT
             )
             """)
         self.conn.commit()
 
     def inserir_filme(self, filme):
         self.cursor.execute("""
-            INSERT INTO Filme(nome, ano, duracao, likes)
-                            VALUES(?,?,?,?)
-                            """, (filme['_nome'], filme['ano'], filme['duracao'], filme['_likes']))
+            INSERT INTO Filme(nome, ano, duracao, likes, categoria)
+                            VALUES(?,?,?,?,?)
+                            """, (filme['_nome'], filme['ano'], filme['duracao'], filme['_likes'], filme['categoria']))
         self.conn.commit()
 
     def inserir_serie(self, serie):
         self.cursor.execute("""
-            INSERT INTO Serie(nome, ano, temporadas, likes)
-                            VALUES(?,?,?,?)
-                            """, (serie['_nome'], serie['ano'], serie['temporadas'], serie['_likes']))
+            INSERT INTO Serie(nome, ano, temporadas, likes, categoria)
+                            VALUES(?,?,?,?,?)
+                            """, (serie['_nome'], serie['ano'], serie['temporadas'], serie['_likes'], serie['categoria']))
         self.conn.commit()
             
     def consultar_dados(self, produto, nome=None):
@@ -78,9 +80,6 @@ class Crud:
         
         mensagem = "Cadastro alterado com sucesso"
         
-        if nome:
-            nome = self.consultar_dados(banco, nome)
-            mensagem = f"Você deu like em {nome}"
 
         self.cursor.execute(f"""
             UPDATE {banco}
@@ -89,9 +88,18 @@ class Crud:
         """, valores_atualizar + (id, ))
         self.conn.commit()
         
+        if nome:
+            nome = self.consultar_dados(banco, nome)
+            mensagem = f"Você deu like em {nome[0][1]}"
+            
         return mensagem 
  
     def excluir_registro(self, id, banco):
         self.cursor.execute(f"DELETE FROM {banco} WHERE id=?", (id,))
         self.conn.commit()
         return f"{banco} excluído com sucesso"
+    
+    def modificar_tabela(self, tabela, nova_coluna, tipo_da_coluna):
+        self.cursor.execute(f"ALTER TABLE {tabela} ADD COLUMN {nova_coluna} {tipo_da_coluna}")
+        self.conn.commit()
+        self.conn.close()

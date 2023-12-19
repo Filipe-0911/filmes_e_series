@@ -5,8 +5,8 @@ class Serie(Programa, Crud):
 
     produto = 'Serie'
 
-    def __init__(self, nome, ano, temporadas):
-        super().__init__(nome, ano)
+    def __init__(self, nome, ano, temporadas, categoria=None):
+        super().__init__(nome, ano, categoria)
         self.temporadas = temporadas
 
         self.inserir(self.detalhar())
