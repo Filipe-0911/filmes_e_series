@@ -14,7 +14,7 @@ class Programa(Crud):
         self._likes += 1
         modificacoes = {'likes': self._likes}
         id = self._get_id()
-        return Crud().atualizar_registro(id, modificacoes, self.produto, 'id')
+        return Crud().atualizar_registro(id, modificacoes, self.produto, 'id', self.nome)
 
     @property
     def nome(self):
@@ -32,3 +32,26 @@ class Programa(Crud):
     
     def _get_id(self):
         return Crud().consultar_dados(self.produto, self.nome)[0][0]
+    
+    def excluir_dados(self):
+        id = self._get_id()
+        return Crud().excluir_registro(id, self.produto)
+    
+    def atualizar_dados(self, dados_novos):
+        id = self._get_id()
+        
+        if 'nome' in dados_novos:
+            dados_novos['nome'] = dados_novos['nome'].title()
+            self.nome = dados_novos['nome']
+            
+        for chave, valor in dados_novos.items():
+            if hasattr(self, chave):
+                setattr(self, chave, valor)
+            
+        return Crud().atualizar_registro(id, dados_novos, self.produto)        
+    
+    @classmethod
+    def consultar_informacoes(cls, item=None):
+        if item: item = item.title()
+        return Crud().consultar_dados(cls.produto, item)
+    

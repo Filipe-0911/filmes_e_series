@@ -69,12 +69,18 @@ class Crud:
 
         return result
     
-    def atualizar_registro(self, id, modificacoes, banco, parametro_busca):
+    def atualizar_registro(self, id, modificacoes, banco, parametro_busca='id', nome=None):
         if not modificacoes:
             return "Não foi informada nenhuma modificação"
                
         campos_atualizar = ', '.join(f"{campo} =?" for campo in modificacoes.keys())
         valores_atualizar = tuple(modificacoes.values())
+        
+        mensagem = "Cadastro alterado com sucesso"
+        
+        if nome:
+            nome = self.consultar_dados(banco, nome)
+            mensagem = f"Você deu like em {nome}"
 
         self.cursor.execute(f"""
             UPDATE {banco}
@@ -83,8 +89,8 @@ class Crud:
         """, valores_atualizar + (id, ))
         self.conn.commit()
         
-        return f"Você deu like em {id}"
-    
+        return mensagem 
+ 
     def excluir_registro(self, id, banco):
         self.cursor.execute(f"DELETE FROM {banco} WHERE id=?", (id,))
         self.conn.commit()
