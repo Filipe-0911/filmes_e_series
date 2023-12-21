@@ -33,7 +33,8 @@ class Crud:
                             ano TEXT,
                             temporadas TEXT,
                             likes INTEGER,
-                            categoria TEXT
+                            categoria TEXT,
+                            sinopse TEXT
             )""")
         
         self.cursor.execute(f"""
@@ -43,23 +44,24 @@ class Crud:
                             ano TEXT,
                             duracao INTEGER,
                             likes INTEGER,
-                            categoria TEXT
+                            categoria TEXT,
+                            sinopse TEXT
             )
             """)
         self.conn.commit()
 
     def inserir_filme(self, filme):
         self.cursor.execute("""
-            INSERT INTO Filme(nome, ano, duracao, likes, categoria)
-                            VALUES(?,?,?,?,?)
-                            """, (filme['_nome'], filme['ano'], filme['duracao'], filme['_likes'], filme['categoria']))
+            INSERT INTO Filme(nome, ano, duracao, likes, categoria, sinopse)
+                            VALUES(?,?,?,?,?,?)
+                            """, (filme['_nome'], filme['ano'], filme['duracao'], filme['_likes'], filme['categoria'], filme['sinopse']))
         self.conn.commit()
 
     def inserir_serie(self, serie):
         self.cursor.execute("""
-            INSERT INTO Serie(nome, ano, temporadas, likes, categoria)
-                            VALUES(?,?,?,?,?)
-                            """, (serie['_nome'], serie['ano'], serie['temporadas'], serie['_likes'], serie['categoria']))
+            INSERT INTO Serie(nome, ano, temporadas, likes, categoria, sinopse)
+                            VALUES(?,?,?,?,?,?)
+                            """, (serie['_nome'], serie['ano'], serie['temporadas'], serie['_likes'], serie['categoria'], serie['sinopse']))
         self.conn.commit()
             
     def consultar_dados(self, produto, nome=None):

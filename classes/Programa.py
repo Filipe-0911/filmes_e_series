@@ -1,11 +1,13 @@
 from classes.Crud import Crud
 from classes.CategoriaMixin import CategoriaMixin
+from classes.ConectaAPI import ConectaApi
 
-class Programa(CategoriaMixin, Crud):
-    def __init__(self, nome, ano, categoria):
+class Programa(CategoriaMixin, Crud, ConectaApi):
+    def __init__(self, nome, ano, categoria, sinopse):
         self._nome = nome.title()
         self.ano = ano
         self._likes = 0
+        self.sinopse = sinopse
         super().__init__(categoria)
     
     @property
@@ -56,4 +58,3 @@ class Programa(CategoriaMixin, Crud):
     def consultar_informacoes(cls, item=None):
         if item: item = item.title()
         return Crud().consultar_dados(cls.produto, item)
-    

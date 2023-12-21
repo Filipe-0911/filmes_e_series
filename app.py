@@ -1,6 +1,7 @@
 from classes.Filme import Filme
 from classes.Serie import Serie
 from classes.PlayList import PlayList
+from classes.ConectaAPI import ConectaApi
 
 vindagores = Filme('vingadores - guerra infinita', 2018, 160, 'ação, aventura, fantasia, fantasia científica, história de super-heroi')
 atlanta = Serie('the walking dead', 2018, 2, 'terror, drama, pós-apocalíptica')
@@ -36,3 +37,8 @@ for lista in listas_recomendacao:
     lista.receber_dados()
     print(lista)
     print()
+
+print(vindagores.nome)
+teste = ConectaApi(atlanta)
+
+print(teste.conecta_api())
