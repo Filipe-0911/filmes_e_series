@@ -1,14 +1,13 @@
-from classes.Crud import Crud
 from classes.CategoriaMixin import CategoriaMixin
 from classes.ConectaAPI import ConectaApi
+from classes.Crud import Crud
 
 class Programa(CategoriaMixin, Crud, ConectaApi):
-    def __init__(self, nome, ano, categoria, sinopse):
+    def __init__(self, nome):
         self._nome = nome.title()
-        self.ano = ano
         self._likes = 0
-        self.sinopse = sinopse
-        super().__init__(categoria)
+        self.dados = ConectaApi(self).conecta_api()
+        
     
     @property
     def likes(self):
@@ -32,7 +31,7 @@ class Programa(CategoriaMixin, Crud, ConectaApi):
         return self.__dict__
     
     def __str__(self):
-       return f"Nome: {self._nome} - Ano: {self.ano} - Likes: {self._likes}"
+       return f"Nome: {self['nome']} - Ano: {self['ano']} - Likes: {self._likes}"
     
     def _get_id(self):
         return Crud().consultar_dados(self.produto, self.nome)[0][0]

@@ -1,18 +1,24 @@
 from classes.Filme import Filme
 from classes.Serie import Serie
 from classes.PlayList import PlayList
-from classes.ConectaAPI import ConectaApi
 
-vindagores = Filme('vingadores - guerra infinita', 2018, 160, 'ação, aventura, fantasia, fantasia científica, história de super-heroi')
-atlanta = Serie('the walking dead', 2018, 2, 'terror, drama, pós-apocalíptica')
-tmep = Filme('todo mundo em pânico', 1999, 100, 'comédia, drama, terror')
-demolidor = Serie('demolidor', 2016, 2, 'Ação, História de super-herói, Ficção científica, Aventura')
+vingadores = Filme('vingadores - guerra infinita')
+atlanta = Serie('the walking dead')
+tmep = Filme('todo mundo em pânico')
+demolidor = Serie('demolidor')
+star_wars = Filme('star wars - a vingança dos sith')
+friends = Serie('Friends')
 
-vindagores.dar_likes()
-vindagores.dar_likes()
-vindagores.dar_likes()
-vindagores.dar_likes()
+vingadores.dar_likes()
+vingadores.dar_likes()
+vingadores.dar_likes()
+vingadores.dar_likes()
+vingadores.dar_likes()
+vingadores.dar_likes()
 
+atlanta.dar_likes()
+atlanta.dar_likes()
+atlanta.dar_likes()
 atlanta.dar_likes()
 atlanta.dar_likes()
 atlanta.dar_likes()
@@ -37,8 +43,3 @@ for lista in listas_recomendacao:
     lista.receber_dados()
     print(lista)
     print()
-
-print(vindagores.nome)
-teste = ConectaApi(atlanta)
-
-print(teste.conecta_api())

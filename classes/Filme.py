@@ -5,10 +5,15 @@ class Filme(Programa, Crud):
 
     produto = 'Filme'
     
-    def __init__(self, nome, ano, duracao, categoria=None, sinopse=None):
-        super().__init__(nome, ano, categoria, sinopse)
-        self.duracao = duracao
-
+    def __init__(self, nome):
+        super().__init__(nome)
+        self.ano = self.dados['ano']
+        self.duracao = self.dados['duracao']
+        self.nome = self.dados['nome']
+        self.sinopse = self.dados['sinopse']
+        self.categoria = self.dados['categoria']
+        
+        del self.dados
         self.inserir(self.detalhar())
 
     def __str__(self):
@@ -21,7 +26,6 @@ class Filme(Programa, Crud):
         produto_duplicado = banco.consultar_dados(self.produto, filtrar_por)
 
         if produto_duplicado:
-            # print("Produto já inserido")
             return "Produto já inserido"
         else: 
             banco.inserir_filme(item)
