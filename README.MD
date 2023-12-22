@@ -1,6 +1,6 @@
 # Filmes e séries
 
-Fiz este projeto para treinar conceitos de POO em Python. As bibliotecas utilizadas estão no arquivo requirements.txt.
+Fiz este projeto para treinar conceitos de POO em Python, integração com API externa e inserção no banco de dados. As bibliotecas utilizadas estão no arquivo requirements.txt.
 
 Para utilizar, crie um arquivo .env com o a chave obita através do cadastro no [site](https://www.themoviedb.org/?language=pt-BR).
 
