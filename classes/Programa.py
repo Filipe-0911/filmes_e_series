@@ -8,7 +8,6 @@ class Programa(CategoriaMixin, Crud, ConectaApi):
         self._likes = 0
         self.dados = ConectaApi(self).conecta_api()
         
-    
     @property
     def likes(self):
         return self._likes

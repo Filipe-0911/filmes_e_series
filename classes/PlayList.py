@@ -10,6 +10,9 @@ class PlayList(AnaliseCategoria):
     def __len__(self):
         return len(self._programas)
     
+    def __repr__(self):
+        return f"{self._retorna_nome_programa(self.programas)}"
+    
     def __str__(self):
         return f"{self._retorna_nome_programa(self.programas)}"
     

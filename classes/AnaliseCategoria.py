@@ -9,6 +9,7 @@ class AnaliseCategoria(Crud):
         filmes = Crud().consultar_dados('Filme')
         series = Crud().consultar_dados('Serie')
         self._programas.clear()
+        self._programas = []
         
         lista_com_todos_os_produtos = []
         lista_com_todos_os_produtos.extend(filmes)
