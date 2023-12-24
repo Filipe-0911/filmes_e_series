@@ -66,10 +66,16 @@ class Crud:
             
     def consultar_dados(self, produto, nome=None):
         if nome:
-            self.cursor.execute(f'SELECT * FROM {produto} WHERE nome=?', (nome,))
+            self.cursor.execute(f'SELECT * FROM {produto} WHERE nome=?', (nome,)) 
         else:
             self.cursor.execute(f'SELECT * FROM {produto}')
         result = self.cursor.fetchall()
+        
+        if not result and nome:
+            self.cursor.execute(f"SELECT * FROM {produto} WHERE nome LIKE ?", (f"%{nome}%",))
+            result = self.cursor.fetchall()
+            if not result:
+                result = False
 
         return result
     
@@ -82,7 +88,6 @@ class Crud:
         
         mensagem = "Cadastro alterado com sucesso"
         
-
         self.cursor.execute(f"""
             UPDATE {banco}
             SET {campos_atualizar}
@@ -92,7 +97,7 @@ class Crud:
         
         if nome:
             nome = self.consultar_dados(banco, nome)
-            mensagem = f"Você deu like em {nome[0][1]}"
+            mensagem = f"Você deu like em {nome}"
             
         return mensagem 
  

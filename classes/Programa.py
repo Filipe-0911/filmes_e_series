@@ -8,6 +8,24 @@ class Programa(CategoriaMixin, Crud, ConectaApi):
         self._likes = 0
         self.dados = ConectaApi(self).conecta_api()
         
+    def inserir(self, item): 
+        banco = Crud()
+        banco.criar_tabela()
+        filtrar_por = self.nome
+        produto_duplicado = banco.consultar_dados(self.produto, filtrar_por)
+
+        if produto_duplicado:
+            print("Produto já inserido")
+            return "Produto já inserido"
+        else: 
+            if self.produto == 'Filme':
+                banco.inserir_filme(item)
+            else: 
+                banco.inserir_serie(item)
+                
+            banco.desconectar_banco()
+            print("Produto inserido com sucesso!")
+            
     @property
     def likes(self):
         return self._likes
