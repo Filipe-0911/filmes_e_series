@@ -2,6 +2,10 @@
 ## Introdução
 Este projeto consiste em um sistema de gerenciamento de programas de entretenimento, como filmes e séries, utilizando a API do The Movie Database (TMDb). O sistema permite a inserção, consulta, atualização e exclusão de programas, bem como a criação de playlists e análises de categorias.
 
+### No terminal, entre na pasta raiz do projeto e digite o código
+
+> pip install -r requirements.txt
+
 Para utilizar, crie um arquivo .env com o a chave obita através do cadastro no [site](https://www.themoviedb.org/?language=pt-BR).
 
 > API_KEY = chave_da_api
