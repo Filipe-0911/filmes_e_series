@@ -8,6 +8,24 @@ class Programa(CategoriaMixin, Crud, ConectaApi):
         self._likes = 0
         self.dados = ConectaApi(self).conecta_api()
         
+    def inserir(self, item): 
+        banco = Crud()
+        banco.criar_tabela()
+        filtrar_por = self.nome
+        produto_duplicado = banco._consultar_dados(self.produto, filtrar_por)
+
+        if produto_duplicado:
+            print("Produto já inserido")
+            return "Produto já inserido"
+        else: 
+            if self.produto == 'Filme':
+                banco.inserir_filme(item)
+            else: 
+                banco.inserir_serie(item)
+                
+            banco.desconectar_banco()
+            print("Produto inserido com sucesso!")
+            
     @property
     def likes(self):
         return self._likes
@@ -16,7 +34,7 @@ class Programa(CategoriaMixin, Crud, ConectaApi):
         self._likes += 1
         modificacoes = {'likes': self._likes}
         id = self._get_id()
-        return Crud().atualizar_registro(id, modificacoes, self.produto, 'id', self.nome)
+        return Crud()._atualizar_registro(id, modificacoes, self.produto, 'id', self.nome)
 
     @property
     def nome(self):
@@ -33,13 +51,13 @@ class Programa(CategoriaMixin, Crud, ConectaApi):
        return f"Nome: {self['nome']} - Ano: {self['ano']} - Likes: {self._likes}"
     
     def _get_id(self):
-        return Crud().consultar_dados(self.produto, self.nome)[0][0]
+        return Crud()._consultar_dados(self.produto, self.nome)[0][0]
     
     def excluir_dados(self):
         id = self._get_id()
-        return Crud().excluir_registro(id, self.produto)
+        return Crud()._excluir_registro(id, self.produto)
     
-    def atualizar_dados(self, dados_novos):
+    def _atualizar_dados(self, dados_novos):
         id = self._get_id()
         
         if 'nome' in dados_novos:
@@ -50,9 +68,9 @@ class Programa(CategoriaMixin, Crud, ConectaApi):
             if hasattr(self, chave):
                 setattr(self, chave, valor)
             
-        return Crud().atualizar_registro(id, dados_novos, self.produto)        
+        return Crud()._atualizar_registro(id, dados_novos, self.produto)
     
     @classmethod
     def consultar_informacoes(cls, item=None):
-        if item: item = item.title()
-        return Crud().consultar_dados(cls.produto, item)
+        if item: item = item.nome.title()
+        return Crud()._consultar_dados(cls.produto, item)

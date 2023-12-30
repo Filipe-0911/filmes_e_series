@@ -1,7 +1,6 @@
 from classes.Programa import Programa
-from classes.Crud import Crud
 
-class Filme(Programa, Crud):
+class Filme(Programa):
 
     produto = 'Filme'
     
@@ -14,20 +13,8 @@ class Filme(Programa, Crud):
         self.categoria = self.dados['categoria']
         
         del self.dados
+        
         self.inserir(self.detalhar())
 
     def __str__(self):
         return f"{super().__str__()} - {self.duracao} min"
-    
-    def inserir(self, item): 
-        banco = Crud()
-        banco.criar_tabela()
-        filtrar_por = self.nome
-        produto_duplicado = banco.consultar_dados(self.produto, filtrar_por)
-
-        if produto_duplicado:
-            return "Produto já inserido"
-        else: 
-            banco.inserir_filme(item)
-            banco.desconectar_banco()
-            print("Produto inserido com sucesso!")

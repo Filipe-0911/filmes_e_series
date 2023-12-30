@@ -1,5 +1,6 @@
 import sqlite3
 import os.path
+import numpy as np
 
 class Crud:
 
@@ -64,16 +65,22 @@ class Crud:
                             """, (serie['_nome'], serie['ano'], serie['temporadas'], serie['_likes'], serie['categoria'], serie['sinopse']))
         self.conn.commit()
             
-    def consultar_dados(self, produto, nome=None):
+    def _consultar_dados(self, produto, nome=None):
         if nome:
-            self.cursor.execute(f'SELECT * FROM {produto} WHERE nome=?', (nome,))
+            self.cursor.execute(f'SELECT * FROM {produto} WHERE nome=?', (nome,)) 
         else:
             self.cursor.execute(f'SELECT * FROM {produto}')
         result = self.cursor.fetchall()
+        
+        if not result and nome:
+            self.cursor.execute(f"SELECT * FROM {produto} WHERE nome LIKE ?", (f"%{nome}%",))
+            result = self.cursor.fetchall()
+            if not result:
+                result = False
 
         return result
     
-    def atualizar_registro(self, id, modificacoes, banco, parametro_busca='id', nome=None):
+    def _atualizar_registro(self, id, modificacoes, banco, parametro_busca='id', nome=None):
         if not modificacoes:
             return "Não foi informada nenhuma modificação"
                
@@ -82,7 +89,6 @@ class Crud:
         
         mensagem = "Cadastro alterado com sucesso"
         
-
         self.cursor.execute(f"""
             UPDATE {banco}
             SET {campos_atualizar}
@@ -91,12 +97,12 @@ class Crud:
         self.conn.commit()
         
         if nome:
-            nome = self.consultar_dados(banco, nome)
-            mensagem = f"Você deu like em {nome[0][1]}"
+            nome = self._consultar_dados(banco, nome)
+            mensagem = f"Você deu like em {nome}"
             
         return mensagem 
  
-    def excluir_registro(self, id, banco):
+    def _excluir_registro(self, id, banco):
         self.cursor.execute(f"DELETE FROM {banco} WHERE id=?", (id,))
         self.conn.commit()
         return f"{banco} excluído com sucesso"
@@ -105,3 +111,27 @@ class Crud:
         self.cursor.execute(f"ALTER TABLE {tabela} ADD COLUMN {nova_coluna} {tipo_da_coluna}")
         self.conn.commit()
         self.conn.close()
+    
+    @staticmethod
+    def recomenda_conforme_likes():
+        series = Crud()._consultar_dados('Serie')
+        filmes = Crud()._consultar_dados('Filme')
+        
+        programas = [serie for serie in series]
+        programas += [filme for filme in filmes]
+        
+        programas_array = np.array(programas, dtype=[
+                                                        ('a', int),
+                                                        ('b', 'U999'),
+                                                        ('c', int),
+                                                        ('d', int),
+                                                        ('e', int),
+                                                        ('f', 'U999'),
+                                                        ('g', 'U999')
+                                                    ]
+                                   )
+        
+        programas_array.sort(order='e')
+        programas_array = programas_array[::-1]
+        
+        return programas_array
