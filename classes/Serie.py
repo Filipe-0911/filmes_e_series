@@ -1,5 +1,4 @@
 from classes.Programa import Programa
-from classes.Crud import Crud
 
 class Serie(Programa):
 

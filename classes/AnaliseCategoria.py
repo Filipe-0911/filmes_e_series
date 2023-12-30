@@ -6,8 +6,8 @@ class AnaliseCategoria(Crud):
         self._programas = programas
     
     def receber_dados(self):
-        filmes = Crud().consultar_dados('Filme')
-        series = Crud().consultar_dados('Serie')
+        filmes = Crud()._consultar_dados('Filme')
+        series = Crud()._consultar_dados('Serie')
         self._programas.clear()
         self._programas = []
         
