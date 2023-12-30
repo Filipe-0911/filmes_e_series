@@ -57,5 +57,5 @@ def verificar_programas_com_mais_likes():
         print(f"Nome: {programa[1]}, Likes: {programa[4]}")
 
 
-verificar_programas_com_mais_likes()
 imprime_listas_criadas(listas_criadas)
+verificar_programas_com_mais_likes()
